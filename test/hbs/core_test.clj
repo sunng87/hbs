@@ -4,7 +4,8 @@
 
 (deftest test-render
   (testing "test inline render"
-    (is (= "Hello World" (render "Hello {{name}}" {:name "World"})))))
+    (is (= "Hello World" (render "Hello {{person.name}}"
+                           {:person {:name "World"}})))))
 
 (deftest test-render-file
   (testing "test render from file"

@@ -1,8 +1,10 @@
 (ns hbs.core
   (:import [java.net URI])
-  (:import [com.github.jknack.handlebars Handlebars Template])
+  (:import [com.github.jknack.handlebars
+            Handlebars Template Context ValueResolver])
   (:import [com.github.jknack.handlebars.io ClassTemplateLoader])
-  (:import [com.github.jknack.handlebars.cache ConcurrentMapCache]))
+  (:import [com.github.jknack.handlebars.cache ConcurrentMapCache])
+  (:import [hbs KeywordMapValueResolver]))
 
 (def ^:dynamic *hbs*
   (Handlebars. (ClassTemplateLoader.)
@@ -15,11 +17,10 @@
                                        (.setSuffix suffix))
                                      (ConcurrentMapCache.)))))
 
-(defn wrap-context [ctx]
-  (if (map? ctx)
-    (into {} (for [[k v] ctx]
-               [(if (keyword? k) (name k) (str k)) v]))
-    ctx))
+(defn wrap-context [model]
+  (-> (Context/newBuilder model)
+    (.resolver (into-array ValueResolver [KeywordMapValueResolver/INSTANCE]))
+    (.build)))
 
 (defn render [tpl ctx]
   (.apply ^Template (.compile ^Handlebars *hbs* tpl)
