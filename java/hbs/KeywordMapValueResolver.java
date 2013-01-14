@@ -16,9 +16,9 @@ public enum KeywordMapValueResolver implements ValueResolver {
         Object value = null;
         if (context instanceof Map) {
             value = ((Map) context).get(name);
-        }
-        if (value == null) {
-            value = ((Map) context).get(Keyword.intern(null, name));
+            if (value == null) {
+                value = ((Map) context).get(Keyword.intern(null, name));
+            }
         }
         return value == null ? UNRESOLVED : value;
     }
