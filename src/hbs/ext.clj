@@ -23,3 +23,9 @@
   (if (< ctx (.hash options "compare"))
     (.fn options ctx)
     (.inverse options ctx)))
+
+(defhelper ifcontains [^Object ctx ^Options options]
+  (if (or (contains? ctx (.hash options "item"))
+        (contains? ctx (keyword (.hash options "item"))))
+    (.fn options ctx)
+    (.inverse options ctx)))

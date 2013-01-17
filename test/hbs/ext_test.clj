@@ -16,3 +16,8 @@
   (let [tpl "{{#ifless name compare=0}}hellworld{{else}}nice{{/ifless}}"]
     (is (= "hellworld" (render tpl {:name -23})))
     (is (= "nice" (render tpl {:name 23})))))
+
+(deftest test-ifcontains
+  (let [tpl "{{#ifcontains set item=\"hello\"}}hello{{/ifcontains}}"]
+    (is (= "hello" (render tpl {:set #{:hello}})))
+    (is (= "hello" (render tpl {:set #{"hello"}})))))
