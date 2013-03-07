@@ -21,3 +21,7 @@
   (let [tpl "{{#ifcontains set item=\"hello\"}}hello{{/ifcontains}}"]
     (is (= "hello" (render tpl {:set #{:hello}})))
     (is (= "hello" (render tpl {:set #{"hello"}})))))
+
+(deftest test-uppercase
+  (let [tpl "{{uppercase tom.cat}}"]
+    (is (= "HELLO" (render tpl {:tom {:cat "hello"}})))))

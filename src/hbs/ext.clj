@@ -29,3 +29,6 @@
         (contains? ctx (keyword (.hash options "item"))))
     (.fn options ctx)
     (.inverse options ctx)))
+
+(defhelper uppercase [^Object ctx ^Options options]
+  (clojure.string/upper-case ctx))

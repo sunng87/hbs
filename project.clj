@@ -1,9 +1,9 @@
-(defproject hbs "0.3.0-SNAPSHOT"
+(defproject hbs "0.4.0-SNAPSHOT"
   :description "Clojure templating by Handlebars.java"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.4.0"]
-                 [com.github.jknack/handlebars "0.8.0"]]
+                 [com.github.jknack/handlebars "0.9.0"]]
   :java-source-paths ["java"]
   :javac-options ["-target" "1.6" "-source" "1.6" "-Xlint:-options"])
