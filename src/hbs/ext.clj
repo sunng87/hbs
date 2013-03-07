@@ -32,3 +32,6 @@
 
 (defhelper uppercase [^Object ctx ^Options options]
   (clojure.string/upper-case ctx))
+
+(defhelper lowercase [^Object ctx ^Options options]
+  (clojure.string/lower-case ctx))

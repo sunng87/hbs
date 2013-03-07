@@ -25,3 +25,7 @@
 (deftest test-uppercase
   (let [tpl "{{uppercase tom.cat}}"]
     (is (= "HELLO" (render tpl {:tom {:cat "hello"}})))))
+
+(deftest test-lowercase
+  (let [tpl "{{lowercase tom.cat}}"]
+    (is (= "hello" (render tpl {:tom {:cat "HELLO"}})))))
