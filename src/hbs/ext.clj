@@ -1,6 +1,8 @@
 (ns hbs.ext
   (:use [hbs.core :only [*hbs*]])
-  (:import [com.github.jknack.handlebars Handlebars Helper Options]))
+  (:import [com.github.jknack.handlebars Handlebars Helper Options])
+  (:import [java.util Date])
+  (:import [java.text SimpleDateFormat MessageFormat]))
 
 (defmacro defhelper [name argvec & body]
   (let [argvec (into [] (concat [(gensym)] argvec))]
@@ -35,3 +37,17 @@
 
 (defhelper lowercase [^Object ctx ^Options options]
   (clojure.string/lower-case ctx))
+
+(defhelper or [^Object ctx ^Options options]
+  (str (or ctx (.param options 0))))
+
+(defhelper count [^Object ctx ^Options options]
+  (str (count ctx)))
+
+(defhelper format-date [^Object ctx ^Options options]
+  (let [formatter (SimpleDateFormat. (.hash options "pattern"))]
+    (.format ^SimpleDateFormat formatter ^Date ctx)))
+
+(defhelper format [^Object ctx ^Options options]
+  (let [pattern (.hash options "pattern")]
+    (format pattern ctx)))

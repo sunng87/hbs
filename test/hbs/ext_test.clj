@@ -29,3 +29,16 @@
 (deftest test-lowercase
   (let [tpl "{{lowercase tom.cat}}"]
     (is (= "hello" (render tpl {:tom {:cat "HELLO"}})))))
+
+
+(deftest test-or
+  (let [tpl "{{or tom.cat 100}}"]
+    (is (= "100" (render tpl {:tom {}})))))
+
+(deftest test-count
+  (let [tpl "{{count tom.cat}}"]
+    (is (= "10" (render tpl {:tom {:cat (range 10)}})))))
+
+(deftest test-format
+  (let [tpl "{{format tom.cat pattern=\"%.2f\"}}"]
+    (is (= "3.33" (render tpl {:tom {:cat 3.333}})))))
