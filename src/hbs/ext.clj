@@ -51,3 +51,8 @@
 (defhelper format [^Object ctx ^Options options]
   (let [pattern (.hash options "pattern")]
     (format pattern ctx)))
+
+(defhelper ifempty [^Object ctx ^Options options]
+  (if (empty? ctx)
+    (.fn options ctx)
+    (.inverse options ctx)))

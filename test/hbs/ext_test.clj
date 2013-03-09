@@ -42,3 +42,9 @@
 (deftest test-format
   (let [tpl "{{format tom.cat pattern=\"%.2f\"}}"]
     (is (= "3.33" (render tpl {:tom {:cat 3.333}})))))
+
+
+(deftest test-ifempty
+  (let [tpl "{{#ifempty this}}helloworld{{else}}nice{{/ifempty}}"]
+    (is (= "helloworld" (render tpl {})))
+    (is (= "nice" (render tpl {:a 1})))))
