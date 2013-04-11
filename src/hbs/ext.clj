@@ -1,58 +1,61 @@
 (ns hbs.ext
-  (:use [hbs.core :only [*hbs*]])
-  (:import [com.github.jknack.handlebars Handlebars Helper Options])
+  (:refer-clojure :exclude [ hash])
+  (:use [hbs.helper])
   (:import [java.util Date])
   (:import [java.text SimpleDateFormat MessageFormat]))
 
-(defmacro defhelper [name argvec & body]
-  (let [argvec (into [] (concat [(gensym)] argvec))]
-    `(.registerHelper ^Handlebars *hbs*
-       ~(str name)
-       (reify Helper
-         (^CharSequence apply ~argvec ~@body)))))
+(defhelper ifequals [ctx options]
+  (if (= ctx (or (hash options "compare")
+                 (param options 0)))
+    (block-body options ctx)
+    (else-body options ctx)))
 
-(defhelper ifequals [^Object ctx ^Options options]
-  (if (= ctx (.hash options "compare"))
-    (.fn options ctx)
-    (.inverse options ctx)))
+(defhelper ifgreater [ctx options]
+  (if (> ctx (or (hash options "compare")
+                 (param options 0)))
+    (block-body options ctx)
+    (else-body options ctx)))
 
-(defhelper ifgreater [^Object ctx ^Options options]
-  (if (> ctx (.hash options "compare"))
-    (.fn options ctx)
-    (.inverse options ctx)))
+(defhelper ifless [ctx options]
+  (if (< ctx (or (hash options "compare")
+                 (param options 0)))
+    (block-body options ctx)
+    (else-body options ctx)))
 
-(defhelper ifless [^Object ctx ^Options options]
-  (if (< ctx (.hash options "compare"))
-    (.fn options ctx)
-    (.inverse options ctx)))
+(defhelper ifcontains [ ctx  options]
+  (if (or (contains? ctx (hash options "item"))
+          (contains? ctx (keyword (hash options "item"))))
+    (block-body options ctx)
+    (else-body options ctx)))
 
-(defhelper ifcontains [^Object ctx ^Options options]
-  (if (or (contains? ctx (.hash options "item"))
-        (contains? ctx (keyword (.hash options "item"))))
-    (.fn options ctx)
-    (.inverse options ctx)))
+(defhelper uppercase [ctx options]
+  (safe-str (clojure.string/upper-case ctx)))
 
-(defhelper uppercase [^Object ctx ^Options options]
-  (clojure.string/upper-case ctx))
+(defhelper lowercase [ ctx  options]
+  (safe-str (clojure.string/lower-case ctx)))
 
-(defhelper lowercase [^Object ctx ^Options options]
-  (clojure.string/lower-case ctx))
+(defhelper or [ ctx  options]
+  (safe-str (or ctx (param options 0))))
 
-(defhelper or [^Object ctx ^Options options]
-  (str (or ctx (.param options 0))))
+(defhelper count [ctx  options]
+  (safe-str (count ctx)))
 
-(defhelper count [^Object ctx ^Options options]
-  (str (count ctx)))
+(defhelper format-date [ ctx  options]
+  (let [formatter (SimpleDateFormat. (hash options "pattern"))]
+    (safe-str (.format ^SimpleDateFormat formatter ^Date ctx))))
 
-(defhelper format-date [^Object ctx ^Options options]
-  (let [formatter (SimpleDateFormat. (.hash options "pattern"))]
-    (.format ^SimpleDateFormat formatter ^Date ctx)))
-
-(defhelper format [^Object ctx ^Options options]
-  (let [pattern (.hash options "pattern")]
+(defhelper format [ ctx options]
+  (let [pattern (hash options "pattern")]
     (format pattern ctx)))
 
-(defhelper ifempty [^Object ctx ^Options options]
+(defhelper ifempty [ ctx  options]
   (if (empty? ctx)
-    (.fn options ctx)
-    (.inverse options ctx)))
+    (block-body options ctx)
+    (else-body options ctx)))
+
+(defhelper max [ ctx  options]
+  (safe-str (max ctx (param options 0))))
+
+(defhelper min [ ctx  options]
+  (safe-str (min ctx (param options 0))))
+
