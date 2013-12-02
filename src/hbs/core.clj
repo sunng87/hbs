@@ -1,5 +1,4 @@
 (ns hbs.core
-  (:import [java.net URI])
   (:import [com.github.jknack.handlebars
             Handlebars Template Context ValueResolver])
   (:import [com.github.jknack.handlebars.io TemplateLoader ClassPathTemplateLoader])
@@ -7,16 +6,17 @@
   (:import [hbs KeywordMapValueResolver]))
 
 (defonce ^:dynamic *hbs*
-  (Handlebars. (ClassPathTemplateLoader.)
-               (ConcurrentMapTemplateCache.)))
+  (doto (Handlebars. (ClassPathTemplateLoader.))
+    (.with (ConcurrentMapTemplateCache.))))
 
 (defn set-template-path! [prefix suffix]
   (alter-var-root (var *hbs*)
                   (fn [h]
                     (.with h
-                           ^TemplateLoader (doto (ClassPathTemplateLoader.)
+                           (into-array TemplateLoader
+                                       [(doto (ClassPathTemplateLoader.)
                                              (.setPrefix prefix)
-                                             (.setSuffix suffix))))))
+                                             (.setSuffix suffix))])))))
 
 (defn wrap-context [model]
   (-> (Context/newBuilder model)
@@ -24,11 +24,9 @@
     (.build)))
 
 (defn render [tpl ctx]
-  (.apply ^Template (.compile ^Handlebars *hbs* tpl)
+  (.apply ^Template (.compileInline ^Handlebars *hbs* tpl)
           (wrap-context ctx)))
 
 (defn render-file [tpl-name ctx]
-  (.apply ^Template (.compile ^Handlebars *hbs*
-                              (URI/create tpl-name))
+  (.apply ^Template (.compile ^Handlebars *hbs* tpl-name)
           (wrap-context ctx)))
-
