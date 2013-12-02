@@ -10,7 +10,7 @@ Based on [handlebars.java](https://github.com/jknack/handlebars.java/)
 ### Leiningen
 
 ```
-[hbs "0.4.1"]
+[hbs "0.5.0"]
 ```
 
 ### Using hbs.core
@@ -22,7 +22,7 @@ Based on [handlebars.java](https://github.com/jknack/handlebars.java/)
 (render "foo {{foo}}" {:foo "bar"})
 
 ;; configure where to load template file:
-(set-template-path! "templates" ".html") 
+(set-template-path! "templates" ".html")
 
 ;; render something from templates/index.html
 (render-file "index" {:foo "bar"})
