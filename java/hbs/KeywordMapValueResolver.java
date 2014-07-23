@@ -30,4 +30,9 @@ public enum KeywordMapValueResolver implements ValueResolver {
         }
         return Collections.emptySet();
     }
+
+    @Override
+    public Object resolve(final Object context) {
+        return UNRESOLVED;
+    }
 }
