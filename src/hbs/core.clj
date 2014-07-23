@@ -11,7 +11,7 @@
 
 (defn set-template-path! [prefix suffix]
   (alter-var-root (var *hbs*)
-                  (fn [h]
+                  (fn [^Handlebars h]
                     (.with h
                            (into-array TemplateLoader
                                        [(doto (ClassPathTemplateLoader.)
@@ -28,5 +28,5 @@
           (wrap-context ctx)))
 
 (defn render-file [tpl-name ctx]
-  (.apply ^Template (.compile ^Handlebars *hbs* tpl-name)
+  (.apply ^Template (.compile ^Handlebars *hbs* ^String tpl-name)
           (wrap-context ctx)))
