@@ -9,9 +9,7 @@ Based on [handlebars.java](https://github.com/jknack/handlebars.java/)
 
 ### Leiningen
 
-```
-[hbs "0.5.0"]
-```
+![https://clojars.org/link](https://clojars.org/hbs/latest-version.svg)
 
 ### Using hbs.core
 
