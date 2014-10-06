@@ -31,3 +31,5 @@
 (defn safe-str [& text]
   (Handlebars$SafeString. (apply str text)))
 
+(defn register-js-helpers! [path]
+  (.registerHelpers ^Handlebars *hbs* (clojure.java.io/file path)))
