@@ -40,6 +40,13 @@ Handlebars is nothing without **helpers**.
 
 ```
 
+### Using javascript helpers
+Helpers can also be defined using javascript. Javascript helpers
+are registered using register-javascript-helpers!-function
+```clojure
+(register-javascript-helpers! "path/to/file-js")
+```
+
 ### Helpers defined by me
 
 I have some predefined helpers used in my projects. And I decide to
