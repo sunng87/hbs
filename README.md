@@ -5,6 +5,8 @@ hiccup on a clojure web development book any more.
 
 Based on [handlebars.java](https://github.com/jknack/handlebars.java/)
 
+[![Build Status](https://travis-ci.org/sunng87/hbs.svg?branch=master)](https://travis-ci.org/sunng87/hbs)
+
 ## Usage
 
 ### Leiningen
@@ -70,6 +72,10 @@ Available helpers:
 * ifempty
 * max
 * min
+
+### API Documents
+
+[Documents](http://sunng.info/hbs/)
 
 ## License
 
