@@ -4,7 +4,9 @@
   (:import [com.github.jknack.handlebars
             Handlebars Helper Options Handlebars$SafeString]))
 
-(defmacro defhelper [name argvec & body]
+(defmacro defhelper
+  "Macro for helper definition."
+  [name argvec & body]
   (let [argvec (into [] (concat [(gensym)] argvec))]
     `(.registerHelper ^Handlebars *hbs*
        ~(str name)
@@ -28,8 +30,12 @@
   (else-body [this ctx]
     (.inverse this ctx)))
 
-(defn safe-str [& text]
+(defn safe-str
+  "A wrapper of Handlebars.SafeString"
+  [& text]
   (Handlebars$SafeString. (apply str text)))
 
-(defn register-js-helpers! [path]
+(defn register-js-helpers!
+  "Register helper defined in JavaScript."
+  [path]
   (.registerHelpers ^Handlebars *hbs* (clojure.java.io/file path)))

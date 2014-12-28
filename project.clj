@@ -7,5 +7,8 @@
                  [com.github.jknack/handlebars "1.3.2"]]
   :java-source-paths ["java"]
   :javac-options ["-target" "1.6" "-source" "1.6" "-Xlint:-options"]
+  :plugins [[codox "0.8.10"]]
+  :codox {:output-dir "target/codox"
+          :exclude [hbs.ext]}
   :global-vars {*warn-on-reflection* true}
   :deploy-repositories {"releases" :clojars})
