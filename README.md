@@ -42,9 +42,9 @@ Handlebars is nothing without **helpers**.
 
 ### Using javascript helpers
 Helpers can also be defined using javascript. Javascript helpers
-are registered using register-javascript-helpers!-function
+are registered using register-js-helpers!-function
 ```clojure
-(register-javascript-helpers! "path/to/file-js")
+(register-js-helpers! "path/to/file.js")
 ```
 
 ### Helpers defined by me
@@ -73,6 +73,6 @@ Available helpers:
 
 ## License
 
-Copyright © 2013 Sun Ning
+Copyright © 2013-2015 Sun Ning
 
 Distributed under the Eclipse Public License, the same as Clojure.
