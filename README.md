@@ -3,7 +3,18 @@
 Real-world Clojure templating, seriously. Don't talk about enlive or
 hiccup on a clojure web development book any more.
 
-Based on [handlebars.java](https://github.com/jknack/handlebars.java/)
+* Never ruin your Clojure code with HTML
+* Never ruin your HTML code with Clojure
+* Templating without reuse mechanism is shit
+* Templating without customization is nothing but shit
+
+What handlebars has?
+
+* Separate your Clojure and HTML, calm down both
+* Reuse your handlebars template with **include**, **partial** and **block**
+* Create your own **helpers** for your infinite customization needs
+
+This library is based on [handlebars.java](https://github.com/jknack/handlebars.java/).
 
 [![Build Status](https://travis-ci.org/sunng87/hbs.svg?branch=master)](https://travis-ci.org/sunng87/hbs)
 
@@ -76,6 +87,10 @@ Available helpers:
 ### API Documents
 
 [Documents](http://sunng.info/hbs/)
+
+## See also
+
+Handlebars implemented for Rust language: [handlebars-rust](https://github.com/sunng87/handlebars-rust).
 
 ## License
 
