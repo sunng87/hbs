@@ -36,3 +36,12 @@
   [tpl-name ctx]
   (.apply ^Template (.compile ^Handlebars *hbs* ^String tpl-name)
           (wrap-context ctx)))
+
+(defn wrap-handlebars-template [handler]
+  (fn [req]
+    (let [resp (handler req)]
+      (if-let [template-info (:hbs resp)]
+        (assoc resp
+               :body (render-file (:template template-info)
+                                  (:context template-info)))
+        resp))))
