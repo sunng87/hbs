@@ -1,9 +1,9 @@
 (ns hbs.core
+  (:require [clojure.walk])
   (:import [com.github.jknack.handlebars
             Handlebars Template Context ValueResolver])
   (:import [com.github.jknack.handlebars.io TemplateLoader ClassPathTemplateLoader])
-  (:import [com.github.jknack.handlebars.cache ConcurrentMapTemplateCache])
-  (:import [hbs KeywordMapValueResolver]))
+  (:import [com.github.jknack.handlebars.cache ConcurrentMapTemplateCache]))
 
 (defonce ^:dynamic ^:no-doc *hbs*
   (doto (Handlebars. (ClassPathTemplateLoader.))
@@ -21,9 +21,11 @@
                                              (.setSuffix suffix))])))))
 
 (defn- wrap-context [model]
-  (-> (Context/newBuilder model)
-    (.resolver (into-array ValueResolver [KeywordMapValueResolver/INSTANCE]))
-    (.build)))
+  (clojure.walk/postwalk
+   #(cond
+     (map? %) (java.util.HashMap. %)
+     (keyword? %) (name %)
+     :else %) model))
 
 (defn render
   "Render ctx with a template provided as string."
