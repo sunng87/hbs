@@ -19,3 +19,7 @@
 (deftest test-render-file
   (testing "test render from file"
     (is (= "Hello World!\n" (render-file "hello" {:name "World"})))))
+
+(deftest test-render-chinese
+  (testing "render some Chinese characters from file"
+    (is (= "中超联赛 2015\n" (render-file "cn" {:year 2015})))))
