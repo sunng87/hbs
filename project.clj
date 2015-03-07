@@ -5,6 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [com.github.jknack/handlebars "2.0.0"]]
+  :profiles {:test {:dependencies [[ring "1.3.2"]]}}
   :java-source-paths ["java"]
   :javac-options ["-target" "1.6" "-source" "1.6" "-Xlint:-options"]
   :plugins [[codox "0.8.10"]]
