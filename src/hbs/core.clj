@@ -61,7 +61,11 @@
   (fn [req]
     (let [resp (handler req)]
       (if-let [template-info (:hbs resp)]
-        (assoc resp
-               :body (render-file (:template template-info)
-                                  (:context template-info)))
+        (-> resp
+            (assoc :body (render-file (:template template-info)
+                                      (:context template-info)))
+            (update-in [:headers "Content-Type"]
+                       (fn [ct]
+                         (if (some? ct) ct "text/html; charset=utf-8"))))
+
         resp))))
