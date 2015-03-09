@@ -22,6 +22,7 @@
 
 (deftest test-render-chinese
   (testing "render some Chinese characters from file"
+    (set-template-path! "/templates" ".tpl")
     (is (= "中超联赛 2015\n" (render-file "cn" {:year 2015})))))
 
 (deftest test-render-http-file
