@@ -42,6 +42,24 @@ This library is based on [handlebars.java](https://github.com/jknack/handlebars.
 (render-file "index" {:foo "bar"})
 ```
 
+### Using hbs in Ring application
+
+hbs library provides a default ring middleware
+`hbs.core/wrap-handlebars-template` to generate pages from standard
+response: `{:hbs {:template ... :context ...}}`
+
+```clojure
+;; ring handler function that generate handlebars response
+(defn some-handler [req]
+  ;;...
+  {:hbs {:template "index"
+         :context {:a "A" :b "B"}}})
+```
+
+By default, hbs middleware use `text/html; charset=utf-8` as content
+type. You can override it by setting `{:headers {"Content-Type" ...}}`
+explicitly in your response.
+
 ### Extending hbs.helper
 
 Handlebars is nothing without **helpers**.
