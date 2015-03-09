@@ -1,9 +1,9 @@
 (ns hbs.core
   (:require [clojure.walk])
   (:import [com.github.jknack.handlebars
-            Handlebars Template Context ValueResolver])
-  (:import [com.github.jknack.handlebars.io TemplateLoader ClassPathTemplateLoader])
-  (:import [com.github.jknack.handlebars.cache ConcurrentMapTemplateCache]))
+            Handlebars Template Context ValueResolver]
+           [com.github.jknack.handlebars.io TemplateLoader ClassPathTemplateLoader URLTemplateLoader]
+           [com.github.jknack.handlebars.cache ConcurrentMapTemplateCache]))
 
 (defonce ^:dynamic ^:no-doc *hbs*
   (doto (Handlebars. (ClassPathTemplateLoader.))
@@ -19,6 +19,24 @@
                                        [(doto (ClassPathTemplateLoader.)
                                              (.setPrefix prefix)
                                              (.setSuffix suffix))])))))
+
+(defn url-template-loader []
+  (proxy [URLTemplateLoader] []
+    (getResource [location] (java.net.URL. location))))
+
+(defn set-template-url!
+  "Set root URL where you store template files. This should be called before you render anything with hbs."
+  ([prefix]
+   (set-template-url! prefix URLTemplateLoader/DEFAULT_SUFFIX))
+  ([prefix suffix]
+   (let [template-loader (url-template-loader)]
+     (alter-var-root (var *hbs*)
+                     (fn [^Handlebars h]
+                       (.with h
+                              (into-array TemplateLoader
+                                          [(doto template-loader
+                                             (.setPrefix prefix)
+                                             (.setSuffix suffix))])))))))
 
 (defn- wrap-context [model]
   (clojure.walk/postwalk
