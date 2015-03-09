@@ -35,6 +35,9 @@ This library is based on [handlebars.java](https://github.com/jknack/handlebars.
 ;; configure where to load template file:
 (set-template-path! "templates" ".html")
 
+;; OR load templates from a remote URL (defaults to .hbs files):
+(set-template-url! "http://example.com/templates/")
+
 ;; render something from templates/index.html
 (render-file "index" {:foo "bar"})
 ```
