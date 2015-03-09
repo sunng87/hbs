@@ -31,3 +31,12 @@
       (with-test-webserver http-port
         (set-template-url! (str "http://localhost:" http-port))
         (is (= "Hello World!" (render-file "hi" {:name "World"})))))))
+
+(deftest test-middleware
+  (testing "test hbs middleware"
+    (set-template-path! "/templates" ".tpl")
+    (let [ring-fn (fn [req] {:hbs {:template "hello"
+                                  :context {:name "World"}}})
+          resp ((wrap-handlebars-template ring-fn) {})]
+      (is (= "Hello World!\n" (:body resp)))
+      (is (= "text/html; charset=utf-8" (-> resp :headers (get "Content-Type")))))))
