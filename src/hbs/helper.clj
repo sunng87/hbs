@@ -13,6 +13,14 @@
        (reify Helper
          (apply ~argvec ~@body)))))
 
+(defmacro defhelper-missing
+  "Define the missing-helper helper."
+  [argvec & body]
+  (let [argvec (into [] (concat [(gensym)] argvec))]
+    `(.registerHelperMissing ^Handlebars *hbs*
+                             (reify Helper
+                               (apply ~argvec ~@body)))))
+
 (defprotocol HandlebarsOptions
   (param [this idx])
   (hash [this key])
