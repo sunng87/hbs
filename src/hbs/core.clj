@@ -20,6 +20,10 @@
                                              (.setPrefix prefix)
                                              (.setSuffix suffix))])))))
 
+(defn set-reload!
+  "Allow template auto reload, disabled by default"
+  [reload?] (.setReload (.getCache *hbs*) reload?))
+
 (defn url-template-loader []
   (proxy [URLTemplateLoader] []
     (getResource [location] (java.net.URL. location))))
