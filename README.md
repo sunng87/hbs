@@ -105,6 +105,8 @@ Available helpers:
 * max
 * min
 
+You can find usage examples of these helpers in the test case `test/hbs/ext_test.clj`.
+
 ### API Documents
 
 [Documents](http://sunng.info/hbs/)
