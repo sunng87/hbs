@@ -62,14 +62,26 @@
           (wrap-context ctx)))
 
 (defn wrap-handlebars-template [handler]
-  (fn [req]
-    (let [resp (handler req)]
-      (if-let [template-info (:hbs resp)]
-        (-> resp
-            (assoc :body (render-file (:template template-info)
-                                      (:context template-info)))
-            (update-in [:headers "Content-Type"]
-                       (fn [ct]
-                         (if (some? ct) ct "text/html; charset=utf-8"))))
-
-        resp))))
+  (fn
+    ([req]
+     (let [resp (handler req)]
+       (if-let [template-info (:hbs resp)]
+         (-> resp
+             (assoc :body (render-file (:template template-info)
+                                       (:context template-info)))
+             (update-in [:headers "Content-Type"]
+                        (fn [ct]
+                          (if (some? ct) ct "text/html; charset=utf-8"))))
+         resp)))
+    ([req send-response raise-error]
+     (let [send-response-inner (fn [resp]
+                                 (send-response
+                                  (if-let [template-info (:hbs resp)]
+                                    (-> resp
+                                        (assoc :body (render-file (:template template-info)
+                                                                  (:context template-info)))
+                                        (update-in [:headers "Content-Type"]
+                                                   (fn [ct]
+                                                     (if (some? ct) ct "text/html; charset=utf-8"))))
+                                    resp)))]
+       (handler req send-response-inner raise-error)))))
