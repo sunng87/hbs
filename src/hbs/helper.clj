@@ -1,25 +1,26 @@
 (ns hbs.helper
   (:refer-clojure :exclude [hash])
-  (:use [hbs.core :only [*hbs*]])
+  (:require [hbs.core :refer [*hbs*]])
   (:import [com.github.jknack.handlebars
             Handlebars Helper Options Handlebars$SafeString]))
 
-(defmacro defhelper
-  "Macro for helper definition."
-  [name argvec & body]
-  (let [argvec (into [] (concat [(gensym)] argvec))]
-    `(.registerHelper ^Handlebars *hbs*
-       ~(str name)
-       (reify Helper
-         (apply ~argvec ~@body)))))
-
-(defmacro defhelper-missing
-  "Define the missing-helper helper."
+(defmacro helper
+  "create a helper instance"
   [argvec & body]
   (let [argvec (into [] (concat [(gensym)] argvec))]
-    `(.registerHelperMissing ^Handlebars *hbs*
-                             (reify Helper
-                               (apply ~argvec ~@body)))))
+    `(reify Helper (apply ~argvec ~@body))))
+
+(defmacro defhelper
+  "def named helper."
+  [name argvec & body]
+  (let [argvec (into [] (concat [(gensym)] argvec))]
+    `(def ~name (reify Helper (apply ~argvec ~@body)))))
+
+(defn register-helper! [^Handlebars reg ^String name ^Helper helper]
+  (.registerHelper reg name helper))
+
+(defn register-helper-missing! [^Handlebars reg ^Helper helper]
+  (.registerHelperMissing reg helper))
 
 (defprotocol HandlebarsOptions
   (param [this idx])
@@ -45,5 +46,5 @@
 
 (defn register-js-helpers!
   "Register helper defined in JavaScript."
-  [path]
-  (.registerHelpers ^Handlebars *hbs* (clojure.java.io/file path)))
+  ([path] (register-js-helpers! *hbs* path))
+  ([reg path] (.registerHelpers ^Handlebars reg (clojure.java.io/file path))))

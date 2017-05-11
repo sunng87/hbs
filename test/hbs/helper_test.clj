@@ -26,6 +26,7 @@
            (pr-str {:name (.-helperName options)
                     :ctx ctx
                     :params (into [] (.-params options))})))
+        (register-helper! *hbs* "test-helper" test-helper)
         (is (= {:name "test-helper"
                 :ctx (:foo context)
                 :params params}
@@ -38,11 +39,12 @@
                       (.with (ConcurrentMapTemplateCache.)))]
       (let [context {:foo "bar"}
             params ["baz" "qux"]]
-        (defhelper-missing [ctx options] (safe-str
-                                          (pr-str
-                                           {:name (.-helperName options)
-                                            :ctx ctx
-                                            :params (into [] (.-params options))})))
+        (register-helper-missing! *hbs*
+                                  (helper [ctx options] (safe-str
+                                                         (pr-str
+                                                          {:name (.-helperName options)
+                                                           :ctx ctx
+                                                           :params (into [] (.-params options))}))))
         (is (= {:name "missing-helper"
                 :ctx (:foo context)
                 :params params}

@@ -1,6 +1,6 @@
 (ns hbs.ext
   (:refer-clojure :exclude [ hash])
-  (:use [hbs.helper])
+  (:require [hbs.helper :refer :all])
   (:import [java.util Date])
   (:import [java.text SimpleDateFormat MessageFormat]))
 
@@ -34,17 +34,17 @@
 (defhelper lowercase [ ctx  options]
   (safe-str (clojure.string/lower-case ctx)))
 
-(defhelper or [ ctx  options]
+(defhelper or-helper [ ctx  options]
   (safe-str (or ctx (param options 0))))
 
-(defhelper count [ctx  options]
+(defhelper count-helper [ctx  options]
   (safe-str (count ctx)))
 
 (defhelper format-date [ ctx  options]
   (let [formatter (SimpleDateFormat. (hash options "pattern"))]
     (safe-str (.format ^SimpleDateFormat formatter ^Date ctx))))
 
-(defhelper format [ ctx options]
+(defhelper format-helper [ ctx options]
   (let [pattern (hash options "pattern")]
     (format pattern ctx)))
 
@@ -53,9 +53,8 @@
     (block-body options ctx)
     (else-body options ctx)))
 
-(defhelper max [ ctx  options]
+(defhelper max-helper [ ctx  options]
   (safe-str (max ctx (param options 0))))
 
-(defhelper min [ ctx  options]
+(defhelper min-helper [ ctx  options]
   (safe-str (min ctx (param options 0))))
-

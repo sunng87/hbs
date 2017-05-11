@@ -1,6 +1,19 @@
 (ns hbs.ext-test
-  (:use [clojure.test]
-        [hbs core ext]))
+  (:require [clojure.test :refer :all]
+            [hbs.core :refer :all]
+            [hbs.helper :refer [register-helper!]]
+            [hbs.ext :refer :all]))
+
+(register-helper! *hbs* "ifequals" ifequals)
+(register-helper! *hbs* "ifgreater" ifgreater)
+(register-helper! *hbs* "ifless" ifless)
+(register-helper! *hbs* "ifcontains" ifcontains)
+(register-helper! *hbs* "uppercase" uppercase)
+(register-helper! *hbs* "lowercase" lowercase)
+(register-helper! *hbs* "or" or-helper)
+(register-helper! *hbs* "count" count-helper)
+(register-helper! *hbs* "format" format-helper)
+(register-helper! *hbs* "ifempty" ifempty)
 
 (deftest test-ifequals
   (let [tpl "{{#ifequals name compare=\"tomcat\"}}hellworld{{else}}nice{{/ifequals}}"]
