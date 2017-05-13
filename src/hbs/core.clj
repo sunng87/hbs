@@ -47,8 +47,8 @@
    (.apply ^Template (.compile ^Handlebars reg ^String tpl-name)
            (wrap-context ctx))))
 
-(defn wrap-handlebars-template
-  ([handler] (wrap-handlebars-template *hbs* handler))
+(defn wrap-hbs-template
+  ([handler] (wrap-hbs-template *hbs* handler))
   ([reg handler]
    (let [process-response (fn [resp]
                             (if-let [template-info (:hbs resp)]
@@ -58,7 +58,8 @@
                                                             (:context template-info)))
                                   (update-in [:headers "Content-Type"]
                                              (fn [ct]
-                                               (if (some? ct) ct "text/html; charset=utf-8"))))
+                                               (if (some? ct) ct "text/html; charset=utf-8")))
+                                  (dissoc :hbs))
                               resp))]
      (fn
        ([req]

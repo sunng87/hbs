@@ -5,7 +5,10 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0" :scope "provided"]
                  [com.github.jknack/handlebars "4.0.6"]]
-  :profiles {:test {:dependencies [[ring "1.6.0"]]}}
+  :profiles {:examples {:dependencies [[ring "1.6.0"]]
+                        :main hbs.server
+                        :source-paths ["examples"]
+                        :resource-paths ["example-resources"]}}
   :plugins [[codox "0.8.10"]]
   :codox {:output-dir "target/codox"
           :exclude [hbs.ext]}
