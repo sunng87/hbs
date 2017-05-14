@@ -28,7 +28,7 @@
   (testing "test hbs middleware"
     (let [ring-fn (fn [req] {:hbs {:template "hello"
                                   :context {:name "World"}}})
-          resp ((wrap-handlebars-template reg ring-fn) {})]
+          resp ((wrap-hbs-template reg ring-fn) {})]
       (is (= "Hello World!\n" (:body resp)))
       (is (= "text/html; charset=utf-8" (-> resp :headers (get "Content-Type"))))))
   (testing "test hbs async middleware"
@@ -38,4 +38,4 @@
           test-resp-fn (fn [resp]
                          (is (= "Hello World!\n" (:body resp)))
                          (is (= "text/html; charset=utf-8" (-> resp :headers (get "Content-Type")))))]
-      ((wrap-handlebars-template reg ring-fn) {} test-resp-fn identity))))
+      ((wrap-hbs-template reg ring-fn) {} test-resp-fn identity))))
