@@ -1,4 +1,4 @@
-(defproject hbs "1.0.0"
+(defproject hbs "1.0.1-SNAPSHOT"
   :description "Clojure templating by Handlebars.java"
   :url "http://github.com/sunng87/hbs"
   :license {:name "Eclipse Public License"
