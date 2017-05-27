@@ -29,7 +29,7 @@
 (defn- wrap-context [model]
   (clojure.walk/postwalk
    #(cond
-     (map? %) (java.util.HashMap. %)
+     (map? %) (java.util.HashMap. ^java.util.Map %)
      (keyword? %) (name %)
      :else %) model))
 
