@@ -107,10 +107,6 @@ Available helpers:
 
 You can find usage examples of these helpers in the test case `test/hbs/ext_test.clj`.
 
-### API Documents
-
-[Documents](https://sunng87.github.io/hbs/)
-
 ## See also
 
 Handlebars implemented for Rust language: [handlebars-rust](https://github.com/sunng87/handlebars-rust).
