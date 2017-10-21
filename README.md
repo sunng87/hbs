@@ -109,7 +109,7 @@ You can find usage examples of these helpers in the test case `test/hbs/ext_test
 
 ### API Documents
 
-[Documents](http://sunng.info/hbs/)
+[Documents](https://sunng87.github.io/hbs/)
 
 ## See also
 
@@ -117,6 +117,6 @@ Handlebars implemented for Rust language: [handlebars-rust](https://github.com/s
 
 ## License
 
-Copyright © 2013-2015 Sun Ning
+Copyright © 2013-2017 Sun Ning
 
 Distributed under the Eclipse Public License, the same as Clojure.
