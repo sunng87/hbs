@@ -42,7 +42,7 @@
 
 (defn render-file
   "Render ctx with a template name."
-  ([tpl-name ctx] (render *hbs* tpl-name ctx))
+  ([tpl-name ctx] (render-file *hbs* tpl-name ctx))
   ([reg tpl-name ctx]
    (.apply ^Template (.compile ^Handlebars reg ^String tpl-name)
            (wrap-context ctx))))
