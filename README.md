@@ -27,19 +27,15 @@ This library is based on [handlebars.java](https://github.com/jknack/handlebars.
 ### Using hbs.core
 
 ```clojure
-(use '[hbs.core])
+(require '[hbs.core :as hbs])
 
-;; render something from template string
-(render "foo {{foo}}" {:foo "bar"})
+;; render template string
+(render "Hello {{person.name}}" {:person {:name "World"}})
 
-;; configure where to load template file:
-(set-template-path! "templates" ".html")
+;; render template file with a registry
+(def reg (registry (classpath-loader "/templates" ".tpl")))
+(render-file reg "hello" {:name "World"})
 
-;; OR load templates from a remote URL (defaults to .hbs files):
-(set-template-url! "http://example.com/templates/")
-
-;; render something from templates/index.html
-(render-file "index" {:foo "bar"})
 ```
 
 ### Using hbs in Ring application
@@ -67,8 +63,14 @@ Handlebars is nothing without **helpers**.
 ```clojure
 (use '[hbs core helper])
 
+;; def a helper
 (defhelper mytag [ctx options]
   (safe-str "HelloWorld, " (clojure.string/upper ctx)))
+
+(def reg (registry (classpath-loader "/templates" ".tpl")))
+
+;; register the helper into registry
+(register-helper! registry "mytag" mytag)
 
 (render "{{mytag foo}}" {:foo "bar"})
 
@@ -78,7 +80,7 @@ Handlebars is nothing without **helpers**.
 Helpers can also be defined using javascript. Javascript helpers
 are registered using register-js-helpers!-function
 ```clojure
-(register-js-helpers! "path/to/file.js")
+(register-js-helpers! registry "path/to/file.js")
 ```
 
 ### Helpers defined by me
@@ -113,6 +115,6 @@ Handlebars implemented for Rust language: [handlebars-rust](https://github.com/s
 
 ## License
 
-Copyright © 2013-2017 Sun Ning
+Copyright © 2013-2018 Sun Ning
 
 Distributed under the Eclipse Public License, the same as Clojure.
