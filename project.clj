@@ -11,8 +11,8 @@
                         :source-paths ["examples"]
                         :resource-paths ["example-resources"]}}
   :plugins [[codox "0.8.10"]
-            [lein-cljsbuild "1.1.6"]
-            [lein-doo "0.1.7"]
+            [lein-cljsbuild "1.1.7"]
+            [lein-doo "0.1.11"]
             [lein-npm "0.7.0-rc2"]]
   :codox {:output-dir "target/codox"
           :exclude [hbs.ext]}
