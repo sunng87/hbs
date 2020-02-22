@@ -1,1 +1,4 @@
 language: clojure
+script:
+  - "lein check && lein test"
+  - "lein npm install && lein doo node test-node once"
