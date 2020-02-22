@@ -4,7 +4,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.10.0" :scope "provided"]
-                 [org.clojure/clojurescript "1.9.293" :scope "provided"]
+                 [org.clojure/clojurescript "1.10.597" :scope "provided"]
                  [com.github.jknack/handlebars "4.1.2"]]
   :profiles {:examples {:dependencies [[ring "1.7.1"]]
                         :main hbs.server
@@ -13,7 +13,7 @@
   :plugins [[codox "0.8.10"]
             [lein-cljsbuild "1.1.6"]
             [lein-doo "0.1.7"]
-            [lein-npm "0.7.0-rc1"]]
+            [lein-npm "0.7.0-rc2"]]
   :codox {:output-dir "target/codox"
           :exclude [hbs.ext]}
   :global-vars {*warn-on-reflection* true}
