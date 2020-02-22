@@ -35,5 +35,5 @@
                                    :main hbs.runner
                                    :target :nodejs
                                    :optimizations :none}}]}
-  :npm {:dependencies [[handlebars "4.0.10"]]
+  :npm {:dependencies [[handlebars "4.7.3"]]
         :write-package-json true})
