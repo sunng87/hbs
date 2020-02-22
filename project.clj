@@ -3,10 +3,10 @@
   :url "http://github.com/sunng87/hbs"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.10.0" :scope "provided"]
+  :dependencies [[org.clojure/clojure "1.10.1" :scope "provided"]
                  [org.clojure/clojurescript "1.10.597" :scope "provided"]
                  [com.github.jknack/handlebars "4.1.2"]]
-  :profiles {:examples {:dependencies [[ring "1.7.1"]]
+  :profiles {:examples {:dependencies [[ring "1.8.0"]]
                         :main hbs.server
                         :source-paths ["examples"]
                         :resource-paths ["example-resources"]}}
