@@ -1,5 +1,6 @@
 (ns hbs.helper
   (:refer-clojure :exclude [hash])
+  (:require [clojure.java.io :as io])
   (:require [hbs.core :refer [*hbs*]])
   (:import [com.github.jknack.handlebars
             Handlebars Helper Options Handlebars$SafeString]))
@@ -47,4 +48,4 @@
 (defn register-js-helpers!
   "Register helper defined in JavaScript."
   ([path] (register-js-helpers! *hbs* path))
-  ([reg path] (.registerHelpers ^Handlebars reg (clojure.java.io/file path))))
+  ([reg path] (.registerHelpers ^Handlebars reg (io/file path))))

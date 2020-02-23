@@ -1,8 +1,9 @@
 (ns hbs.ext
   (:refer-clojure :exclude [ hash])
-  (:require [hbs.helper :refer :all])
+  (:require [clojure.string :as str])
+  (:require [hbs.helper :refer [block-body defhelper else-body hash param safe-str]])
   (:import [java.util Date])
-  (:import [java.text SimpleDateFormat MessageFormat]))
+  (:import [java.text SimpleDateFormat]))
 
 (defhelper ifequals [ctx options]
   (if (= ctx (or (hash options "compare")
@@ -29,10 +30,10 @@
     (else-body options ctx)))
 
 (defhelper uppercase [ctx options]
-  (safe-str (clojure.string/upper-case ctx)))
+  (safe-str (str/upper-case ctx)))
 
 (defhelper lowercase [ ctx  options]
-  (safe-str (clojure.string/lower-case ctx)))
+  (safe-str (str/lower-case ctx)))
 
 (defhelper or-helper [ ctx  options]
   (safe-str (or ctx (param options 0))))

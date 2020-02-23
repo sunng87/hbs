@@ -1,7 +1,7 @@
 (ns hbs.core
   (:require [clojure.walk])
   (:import [com.github.jknack.handlebars
-            Handlebars Template Context ValueResolver]
+            Handlebars Template]
            [com.github.jknack.handlebars.io TemplateLoader ClassPathTemplateLoader
             FileTemplateLoader CompositeTemplateLoader]
            [com.github.jknack.handlebars.cache ConcurrentMapTemplateCache]))
