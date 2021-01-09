@@ -4,9 +4,9 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.10.1" :scope "provided"]
-                 [org.clojure/clojurescript "1.10.597" :scope "provided"]
-                 [com.github.jknack/handlebars "4.1.2"]]
-  :profiles {:examples {:dependencies [[ring "1.8.0"]]
+                 [org.clojure/clojurescript "1.10.773" :scope "provided"]
+                 [com.github.jknack/handlebars "4.2.0"]]
+  :profiles {:examples {:dependencies [[ring "1.8.2"]]
                         :main hbs.server
                         :source-paths ["examples"]
                         :resource-paths ["example-resources"]}}
@@ -35,5 +35,5 @@
                                    :main hbs.runner
                                    :target :nodejs
                                    :optimizations :none}}]}
-  :npm {:dependencies [[handlebars "4.7.3"]]
+  :npm {:dependencies [[handlebars "4.7.6"]]
         :write-package-json true})
