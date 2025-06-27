@@ -1,10 +1,10 @@
 (ns hbs.core
   (:require [clojure.walk])
-  (:import [com.github.jknack.handlebars
-            Handlebars Template]
-           [com.github.jknack.handlebars.io TemplateLoader ClassPathTemplateLoader
-            FileTemplateLoader CompositeTemplateLoader]
-           [com.github.jknack.handlebars.cache ConcurrentMapTemplateCache]))
+  (:import (com.github.jknack.handlebars
+             Context Handlebars Template ValueResolver)
+           (com.github.jknack.handlebars.cache ConcurrentMapTemplateCache)
+           (com.github.jknack.handlebars.io ClassPathTemplateLoader CompositeTemplateLoader
+                                            FileTemplateLoader TemplateLoader)))
 
 (defn classpath-loader
   ([] (ClassPathTemplateLoader.))
@@ -26,12 +26,28 @@
 (defonce ^:dynamic ^:no-doc *hbs*
   (registry (classpath-loader)))
 
-(defn- wrap-context [model]
-  (clojure.walk/postwalk
-   #(cond
-     (map? %) (java.util.HashMap. ^java.util.Map %)
-     (keyword? %) (name %)
-     :else %) model))
+(def clj-value-resolver
+  (reify ValueResolver
+    (resolve [_ context ident]
+      (let [ctx (if (map-entry? context)
+                  (val context)
+                  context)
+            value-from-str (get ctx ident ::unresolved)]
+        (case value-from-str
+          ::unresolved (if (string? ident)
+                         (get ctx (keyword ident)
+                           ValueResolver/UNRESOLVED)
+                         ValueResolver/UNRESOLVED)
+          value-from-str)))))
+
+(defn- wrap-context
+  [model]
+  (if (instance? Context model)
+    model
+    (-> model
+      Context/newBuilder
+      (.push (into-array ValueResolver [clj-value-resolver]))
+      .build)))
 
 (defn render
   "Render ctx with a template provided as string."

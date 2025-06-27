@@ -109,6 +109,44 @@ Available helpers:
 
 You can find usage examples of these helpers in the test case `test/hbs/ext_test.clj`.
 
+### Accessing clojure values
+
+By default, `hbs` library provides a `clj-value-resolver` that accepts both keywords and strings
+
+```clojure
+(hbs/render "{{ person.name }}" {:person {"name" "World"}})
+=> "World"
+```
+
+Between strings and keywords, it will prefer strings
+
+
+```clojure
+(hbs/render "{{ person.name }}" {:person {:name "from kw"
+                                          "name" "from str"}})
+=> "from str"
+```
+
+you can also extend and implement your own value resolver
+
+```clojure
+(hbs/render "{{ person_name }}"
+  (-> {:person/name "world"}
+    Context/newBuilder
+    (.push (into-array ValueResolver [;; if you want, you use the standard hbs first. And just "complement" it.
+                                      hbs/clj-value-resolver
+                                      (reify ValueResolver
+                                        (resolve [_ context ident]
+                                          (get context (some-> ident
+                                                         (string/replace #"_" "/")
+                                                         keyword)
+                                            ValueResolver/UNRESOLVED)))]))
+    .build))
+=> "world"
+```
+
+Checkout [ValueResolver](https://javadoc.io/doc/com.github.jknack/handlebars/latest/com/github/jknack/handlebars/ValueResolver.html)
+
 ## See also
 
 Handlebars implemented for Rust language: [handlebars-rust](https://github.com/sunng87/handlebars-rust).
