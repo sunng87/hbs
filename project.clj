@@ -9,7 +9,8 @@
   :profiles {:examples {:dependencies [[ring "1.8.2"]]
                         :main hbs.server
                         :source-paths ["examples"]
-                        :resource-paths ["example-resources"]}}
+                        :resource-paths ["example-resources"]}
+             :dev {:dependencies [[org.openjdk.nashorn/nashorn-core "15.4"]]}}
   :plugins [[codox "0.8.10"]
             [lein-cljsbuild "1.1.7"]
             [lein-doo "0.1.11"]
